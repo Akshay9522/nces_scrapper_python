@@ -1,4 +1,5 @@
 import select
+import os
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -6,8 +7,9 @@ from selenium.webdriver.support.select import Select
 import pandas as pd
 
 class test_data_scrapper:
+    project_dir=os.getcwd()
     def write_scrap_data(self):
-        driver=webdriver.Chrome(service=Service("C:\\Users\\Admin\\PycharmProjects\\alohaTechnology\\Driver\\chromedriver.exe"))
+        driver=webdriver.Chrome(service=Service(project_dir+"\\Driver\\chromedriver.exe"))
         driver.get("https://nces.ed.gov/ccd/schoolsearch/")
         driver.implicitly_wait(10)
         driver.maximize_window()
@@ -51,7 +53,7 @@ class test_data_scrapper:
         global df
         df=pd.DataFrame(scrap_data,columns=['name','address','phone_number','country','student'])
         try:
-           df.to_csv("C:\\Users\\Admin\\PycharmProjects\\alohaTechnology\\school_data.csv",sep='\t',)
+           df.to_csv(project_dir+"\\school_data.csv",sep='\t',)
         except Exception as error:
             print(error)
         driver.quit()
